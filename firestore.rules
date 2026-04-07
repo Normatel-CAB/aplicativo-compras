@@ -1,0 +1,54 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Solicitações de compra
+    match /solicitacoes/{docId} {
+      allow read, write: if true;
+    }
+
+    // Ordens de compra
+    match /ordens_compra/{docId} {
+      allow read, write: if true;
+    }
+
+    // Fornecedores
+    match /fornecedores/{docId} {
+      allow read, write: if true;
+    }
+
+    // Notas fiscais
+    match /notas_fiscais/{docId} {
+      allow read, write: if true;
+    }
+
+    // Mapa de cotações
+    match /mapa_cotacoes/{docId} {
+      allow read, write: if true;
+    }
+
+    // Configurações (setores, alçadas, geral)
+    match /configuracoes/{docId} {
+      allow read, write: if true;
+    }
+    match /config_setores/{docId} {
+      allow read, write: if true;
+    }
+    match /config_alcadas/{docId} {
+      allow read, write: if true;
+    }
+
+    // Templates de e-mail
+    match /email_templates/{templateId} {
+      allow read, write: if true;
+    }
+
+    // Logs de e-mails enviados
+    match /emails_enviados/{logId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if false;
+    }
+  }
+}
