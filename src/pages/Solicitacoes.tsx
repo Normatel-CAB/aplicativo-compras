@@ -150,10 +150,11 @@ export default function Solicitacoes() {
 
   return (
     <>
-      <div className="page-header">
-        <div className="page-header-info">
-          <h2>Solicitações de Compra</h2>
-          <p>Gerencie as solicitações de compra por setor e acompanhe aprovações</p>
+      <div className="page-head">
+        <div>
+          <div className="page-eyebrow">Compras</div>
+          <h1 className="page-title">Solicitações de Compra</h1>
+          <p className="page-desc">Gerencie as solicitações de compra por setor e acompanhe aprovações</p>
         </div>
         <div className="page-actions">
           <button className="btn btn-secondary" onClick={handleExportar}>
@@ -165,8 +166,8 @@ export default function Solicitacoes() {
         </div>
       </div>
 
-      <div className="filter-bar">
-        <div className="search-bar">
+      <div className="filter-row">
+        <div className="search">
           <Search className="search-icon" size={18} />
           <input
             type="text"
@@ -178,7 +179,7 @@ export default function Solicitacoes() {
         {['all', 'pending', 'approved', 'processing', 'rejected', 'completed'].map((f) => (
           <button
             key={f}
-            className={`filter-chip ${filter === f ? 'active' : ''}`}
+            className={`chip ${filter === f ? 'active' : ''}`}
             onClick={() => setFilter(f)}
           >
             {f === 'all' ? 'Todas' : statusLabels[f]}
@@ -186,7 +187,7 @@ export default function Solicitacoes() {
         ))}
       </div>
 
-      <div className="card">
+      <div className="panel">
         {loading ? (
           <div style={{ padding: 60, textAlign: 'center' }}>
             <Loader2 size={32} className="spin" color="#22c55e" />
@@ -194,7 +195,7 @@ export default function Solicitacoes() {
           </div>
         ) : (
         <>
-        <div className="table-container">
+        <div className="table-wrap">
           <table>
             <thead>
               <tr>
@@ -232,8 +233,8 @@ export default function Solicitacoes() {
                   <td>{s.descricao}</td>
                   <td>{s.itens}</td>
                   <td style={{ fontWeight: 600 }}>{s.valor}</td>
-                  <td><span className={`status-badge ${s.status}`}>{statusLabels[s.status]}</span></td>
-                  <td><span className={`priority-badge ${s.prioridade}`}>{priorityLabels[s.prioridade]}</span></td>
+                  <td><span className={`pill pill-${s.status}`}>{statusLabels[s.status]}</span></td>
+                  <td><span className={`tag tag-${s.prioridade}`}>{priorityLabels[s.prioridade]}</span></td>
                   <td style={{ color: '#6b7280' }}>{s.data}</td>
                   <td>
                     <div style={{ display: 'flex', gap: 4 }}>
@@ -257,14 +258,14 @@ export default function Solicitacoes() {
             </tbody>
           </table>
         </div>
-        <div className="pagination">
-          <div className="pagination-info">Mostrando {paginatedData.length} de {filteredData.length} solicitações</div>
-          <div className="pagination-buttons">
-            <button className="pagination-btn" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>Anterior</button>
+        <div className="pager">
+          <div className="pager-info">Mostrando {paginatedData.length} de {filteredData.length} solicitações</div>
+          <div className="pager-btns">
+            <button className="pager-btn" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>Anterior</button>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-              <button key={p} className={`pagination-btn ${currentPage === p ? 'active' : ''}`} onClick={() => setCurrentPage(p)}>{p}</button>
+              <button key={p} className={`pager-btn ${currentPage === p ? 'active' : ''}`} onClick={() => setCurrentPage(p)}>{p}</button>
             ))}
-            <button className="pagination-btn" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>Próxima</button>
+            <button className="pager-btn" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>Próxima</button>
           </div>
         </div>
         </>
@@ -272,19 +273,19 @@ export default function Solicitacoes() {
       </div>
 
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+        <div className="overlay" onClick={() => setShowModal(false)}>
           <div className="modal slide-in" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
+            <div className="modal-head">
               <h3>Nova Solicitação de Compra</h3>
               <button className="btn btn-ghost btn-icon" onClick={() => setShowModal(false)}>
                 <XCircle size={20} />
               </button>
             </div>
             <div className="modal-body">
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Setor *</label>
-                  <select className="form-select" value={form.setor} onChange={(e) => updateForm('setor', e.target.value)}>
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Setor *</label>
+                  <select className="input" value={form.setor} onChange={(e) => updateForm('setor', e.target.value)}>
                     <option value="">Selecione...</option>
                     <option>TI</option>
                     <option>Marketing</option>
@@ -294,48 +295,48 @@ export default function Solicitacoes() {
                     <option>Logística</option>
                   </select>
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Tipo de Uso</label>
-                  <select className="form-select" value={form.tipo} onChange={(e) => updateForm('tipo', e.target.value)}>
+                <div className="field">
+                  <label className="field-label">Tipo de Uso</label>
+                  <select className="input" value={form.tipo} onChange={(e) => updateForm('tipo', e.target.value)}>
                     <option>Uso Direto</option>
                     <option>Estoque</option>
                   </select>
                 </div>
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Prioridade</label>
-                  <select className="form-select" value={form.prioridade} onChange={(e) => updateForm('prioridade', e.target.value)}>
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Prioridade</label>
+                  <select className="input" value={form.prioridade} onChange={(e) => updateForm('prioridade', e.target.value)}>
                     <option value="medium">Média</option>
                     <option value="high">Alta</option>
                     <option value="low">Baixa</option>
                   </select>
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Solicitante</label>
-                  <input className="form-input" type="text" placeholder="Nome do solicitante" value={form.solicitante} onChange={(e) => updateForm('solicitante', e.target.value)} />
+                <div className="field">
+                  <label className="field-label">Solicitante</label>
+                  <input className="input" type="text" placeholder="Nome do solicitante" value={form.solicitante} onChange={(e) => updateForm('solicitante', e.target.value)} />
                 </div>
               </div>
-              <div className="form-group">
-                <label className="form-label">Descrição dos Itens *</label>
-                <textarea className="form-textarea" placeholder="Descreva os itens que deseja solicitar..." value={form.descricao} onChange={(e) => updateForm('descricao', e.target.value)} />
+              <div className="field">
+                <label className="field-label">Descrição dos Itens *</label>
+                <textarea className="input" placeholder="Descreva os itens que deseja solicitar..." value={form.descricao} onChange={(e) => updateForm('descricao', e.target.value)} />
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Quantidade</label>
-                  <input className="form-input" type="number" placeholder="0" value={form.itens} onChange={(e) => updateForm('itens', e.target.value)} />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Quantidade</label>
+                  <input className="input" type="number" placeholder="0" value={form.itens} onChange={(e) => updateForm('itens', e.target.value)} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Valor Estimado (R$)</label>
-                  <input className="form-input" type="text" placeholder="0,00" value={form.valor} onChange={(e) => updateForm('valor', e.target.value)} />
+                <div className="field">
+                  <label className="field-label">Valor Estimado (R$)</label>
+                  <input className="input" type="text" placeholder="0,00" value={form.valor} onChange={(e) => updateForm('valor', e.target.value)} />
                 </div>
               </div>
-              <div className="form-group">
-                <label className="form-label">Observações</label>
-                <textarea className="form-textarea" placeholder="Observações adicionais..." style={{ minHeight: 60 }} value={form.observacoes} onChange={(e) => updateForm('observacoes', e.target.value)} />
+              <div className="field">
+                <label className="field-label">Observações</label>
+                <textarea className="input" placeholder="Observações adicionais..." style={{ minHeight: 60 }} value={form.observacoes} onChange={(e) => updateForm('observacoes', e.target.value)} />
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-foot">
               <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancelar</button>
               <button className="btn btn-primary" onClick={handleCriar}>Enviar Solicitação</button>
             </div>
@@ -348,9 +349,9 @@ export default function Solicitacoes() {
         const sel = solicitacoes.find(s => s.id === showDetailModal)
         if (!sel) return null
         return (
-          <div className="modal-overlay" onClick={() => setShowDetailModal(null)}>
+          <div className="overlay" onClick={() => setShowDetailModal(null)}>
             <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 600 }}>
-              <div className="modal-header">
+              <div className="modal-head">
                 <h3>Solicitação {sel.id}</h3>
                 <button className="btn btn-ghost btn-icon" onClick={() => setShowDetailModal(null)}><XCircle size={20} /></button>
               </div>
@@ -359,18 +360,18 @@ export default function Solicitacoes() {
                   <div className="detail-item"><label>Setor</label><span>{sel.setor}</span></div>
                   <div className="detail-item"><label>Solicitante</label><span>{sel.solicitante}</span></div>
                   <div className="detail-item"><label>Tipo</label><span>{sel.tipo}</span></div>
-                  <div className="detail-item"><label>Prioridade</label><span className={`priority-badge ${sel.prioridade}`}>{priorityLabels[sel.prioridade]}</span></div>
+                  <div className="detail-item"><label>Prioridade</label><span className={`tag tag-${sel.prioridade}`}>{priorityLabels[sel.prioridade]}</span></div>
                   <div className="detail-item"><label>Quantidade</label><span>{sel.itens} itens</span></div>
                   <div className="detail-item"><label>Valor Estimado</label><span style={{ color: '#16a34a', fontWeight: 600 }}>{sel.valor}</span></div>
                   <div className="detail-item"><label>Data</label><span>{sel.data}</span></div>
-                  <div className="detail-item"><label>Status</label><span className={`status-badge ${sel.status}`}>{statusLabels[sel.status]}</span></div>
+                  <div className="detail-item"><label>Status</label><span className={`pill pill-${sel.status}`}>{statusLabels[sel.status]}</span></div>
                 </div>
                 <div style={{ marginTop: 16, padding: 12, background: '#f9fafb', borderRadius: 8, border: '1px solid #e5e7eb' }}>
                   <div style={{ fontSize: 12, color: '#6b7280', fontWeight: 600, marginBottom: 6 }}>DESCRIÇÃO</div>
                   <div style={{ fontSize: 14 }}>{sel.descricao}</div>
                 </div>
               </div>
-              <div className="modal-footer">
+              <div className="modal-foot">
                 {sel.status === 'pending' ? (
                   <>
                     <button className="btn btn-secondary" style={{ color: '#ef4444' }} onClick={() => { handleRejeitar(sel.id); setShowDetailModal(null) }}>Rejeitar</button>

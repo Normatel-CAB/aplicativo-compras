@@ -124,10 +124,11 @@ export default function OrdensCompra() {
 
   return (
     <>
-      <div className="page-header">
-        <div className="page-header-info">
-          <h2>Ordens de Compra</h2>
-          <p>Gerencie ordens de compra geradas a partir de cotações aprovadas</p>
+      <div className="page-head">
+        <div>
+          <div className="page-eyebrow">Compras</div>
+          <h1 className="page-title">Ordens de Compra</h1>
+          <p className="page-desc">Gerencie ordens de compra geradas a partir de cotações aprovadas</p>
         </div>
         <div className="page-actions">
           <button className="btn btn-secondary" onClick={handleExportar}>
@@ -139,8 +140,8 @@ export default function OrdensCompra() {
         </div>
       </div>
 
-      <div className="filter-bar">
-        <div className="search-bar">
+      <div className="filter-row">
+        <div className="search">
           <Search className="search-icon" size={18} />
           <input
             type="text"
@@ -152,7 +153,7 @@ export default function OrdensCompra() {
         {['all', 'pending', 'approved', 'processing', 'completed', 'rejected'].map((f) => (
           <button
             key={f}
-            className={`filter-chip ${filter === f ? 'active' : ''}`}
+            className={`chip ${filter === f ? 'active' : ''}`}
             onClick={() => setFilter(f)}
           >
             {f === 'all' ? 'Todas' : statusLabels[f]}
@@ -160,7 +161,7 @@ export default function OrdensCompra() {
         ))}
       </div>
 
-      <div className="card">
+      <div className="panel">
         {loading ? (
           <div style={{ padding: 60, textAlign: 'center' }}>
             <Loader2 size={32} className="spin" color="#22c55e" />
@@ -168,7 +169,7 @@ export default function OrdensCompra() {
           </div>
         ) : (
         <>
-        <div className="table-container">
+        <div className="table-wrap">
           <table>
             <thead>
               <tr>
@@ -197,7 +198,7 @@ export default function OrdensCompra() {
                   <td>
                     <span style={{ color: '#2563eb', fontWeight: 500, cursor: 'pointer' }} onClick={() => navigate('/mapa-cotacao')}>{o.cotacao}</span>
                   </td>
-                  <td><span className={`status-badge ${o.status}`}>{statusLabels[o.status]}</span></td>
+                  <td><span className={`pill pill-${o.status}`}>{statusLabels[o.status]}</span></td>
                   <td>
                     <div style={{ display: 'flex', gap: 4 }}>
                       <button className="btn btn-ghost btn-icon btn-sm" title="Visualizar" onClick={() => setShowDetailModal(o.id)}><Eye size={16} /></button>
@@ -212,14 +213,14 @@ export default function OrdensCompra() {
             </tbody>
           </table>
         </div>
-        <div className="pagination">
-          <div className="pagination-info">Mostrando {paginatedData.length} de {filteredData.length} ordens</div>
-          <div className="pagination-buttons">
-            <button className="pagination-btn" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>Anterior</button>
+        <div className="pager">
+          <div className="pager-info">Mostrando {paginatedData.length} de {filteredData.length} ordens</div>
+          <div className="pager-btns">
+            <button className="pager-btn" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>Anterior</button>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-              <button key={p} className={`pagination-btn ${currentPage === p ? 'active' : ''}`} onClick={() => setCurrentPage(p)}>{p}</button>
+              <button key={p} className={`pager-btn ${currentPage === p ? 'active' : ''}`} onClick={() => setCurrentPage(p)}>{p}</button>
             ))}
-            <button className="pagination-btn" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>Próxima</button>
+            <button className="pager-btn" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>Próxima</button>
           </div>
         </div>
         </>
@@ -227,27 +228,27 @@ export default function OrdensCompra() {
       </div>
 
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+        <div className="overlay" onClick={() => setShowModal(false)}>
           <div className="modal slide-in" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
+            <div className="modal-head">
               <h3>Nova Ordem de Compra</h3>
               <button className="btn btn-ghost btn-icon" onClick={() => setShowModal(false)}>
                 <XCircle size={20} />
               </button>
             </div>
             <div className="modal-body">
-              <div className="form-group">
-                <label className="form-label">Cotação de Referência</label>
-                <input className="form-input" type="text" placeholder="Ex: COT-0090" value={form.cotacao} onChange={(e) => updateForm('cotacao', e.target.value)} />
+              <div className="field">
+                <label className="field-label">Cotação de Referência</label>
+                <input className="input" type="text" placeholder="Ex: COT-0090" value={form.cotacao} onChange={(e) => updateForm('cotacao', e.target.value)} />
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Fornecedor *</label>
-                  <input className="form-input" type="text" placeholder="Nome do fornecedor" value={form.fornecedor} onChange={(e) => updateForm('fornecedor', e.target.value)} />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Fornecedor *</label>
+                  <input className="input" type="text" placeholder="Nome do fornecedor" value={form.fornecedor} onChange={(e) => updateForm('fornecedor', e.target.value)} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Forma de Pagamento</label>
-                  <select className="form-select" value={form.formaPag} onChange={(e) => updateForm('formaPag', e.target.value)}>
+                <div className="field">
+                  <label className="field-label">Forma de Pagamento</label>
+                  <select className="input" value={form.formaPag} onChange={(e) => updateForm('formaPag', e.target.value)}>
                     <option>À vista</option>
                     <option>30 dias</option>
                     <option>30/60 dias</option>
@@ -255,26 +256,26 @@ export default function OrdensCompra() {
                   </select>
                 </div>
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Prazo de Entrega</label>
-                  <input className="form-input" type="date" value={form.prazoEntrega} onChange={(e) => updateForm('prazoEntrega', e.target.value)} />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Prazo de Entrega</label>
+                  <input className="input" type="date" value={form.prazoEntrega} onChange={(e) => updateForm('prazoEntrega', e.target.value)} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Transportadora</label>
-                  <select className="form-select" value={form.transportadora} onChange={(e) => updateForm('transportadora', e.target.value)}>
+                <div className="field">
+                  <label className="field-label">Transportadora</label>
+                  <select className="input" value={form.transportadora} onChange={(e) => updateForm('transportadora', e.target.value)}>
                     <option>A definir pelo fornecedor</option>
                     <option>TransLog Express</option>
                     <option>Rápido Transportes</option>
                   </select>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="form-label">Observações</label>
-                <textarea className="form-textarea" placeholder="Instruções especiais para o fornecedor..." value={form.observacoes} onChange={(e) => updateForm('observacoes', e.target.value)} />
+              <div className="field">
+                <label className="field-label">Observações</label>
+                <textarea className="input" placeholder="Instruções especiais para o fornecedor..." value={form.observacoes} onChange={(e) => updateForm('observacoes', e.target.value)} />
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-foot">
               <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancelar</button>
               <button className="btn btn-primary" onClick={handleCriar}>
                 <Send size={16} /> Gerar Ordem
@@ -289,9 +290,9 @@ export default function OrdensCompra() {
         const sel = ordens.find(o => o.id === showDetailModal)
         if (!sel) return null
         return (
-          <div className="modal-overlay" onClick={() => setShowDetailModal(null)}>
+          <div className="overlay" onClick={() => setShowDetailModal(null)}>
             <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 600 }}>
-              <div className="modal-header">
+              <div className="modal-head">
                 <h3>Ordem {sel.id}</h3>
                 <button className="btn btn-ghost btn-icon" onClick={() => setShowDetailModal(null)}><XCircle size={20} /></button>
               </div>
@@ -304,10 +305,10 @@ export default function OrdensCompra() {
                   <div className="detail-item"><label>Prazo de Entrega</label><span>{sel.prazoEntrega}</span></div>
                   <div className="detail-item"><label>Cotação</label><span>{sel.cotacao}</span></div>
                   <div className="detail-item"><label>Itens</label><span>{sel.itens}</span></div>
-                  <div className="detail-item"><label>Status</label><span className={`status-badge ${sel.status}`}>{statusLabels[sel.status]}</span></div>
+                  <div className="detail-item"><label>Status</label><span className={`pill pill-${sel.status}`}>{statusLabels[sel.status]}</span></div>
                 </div>
               </div>
-              <div className="modal-footer">
+              <div className="modal-foot">
                 {(sel.status === 'pending' || sel.status === 'approved') && (
                   <button className="btn btn-primary" onClick={() => { handleEnviar(sel.id); setShowDetailModal(null) }}>
                     <Send size={16} /> Enviar ao Fornecedor

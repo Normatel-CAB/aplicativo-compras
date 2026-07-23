@@ -214,10 +214,11 @@ export default function EmailsAutomaticos() {
 
   return (
     <>
-      <div className="page-header">
-        <div className="page-header-info">
-          <h2>E-mails Automáticos</h2>
-          <p>Configure templates e gatilhos para envio automático de e-mails aos compradores</p>
+      <div className="page-head">
+        <div>
+          <div className="page-eyebrow">Operações</div>
+          <h1 className="page-title">E-mails Automáticos</h1>
+          <p className="page-desc">Configure templates e gatilhos para envio automático de e-mails aos compradores</p>
         </div>
         <div className="page-actions">
           <button className="btn btn-primary" onClick={() => { setEditId(null); setForm(initialForm); setShowModal(true) }}>
@@ -239,21 +240,21 @@ export default function EmailsAutomaticos() {
       )}
 
       {/* Stats */}
-      <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 24 }}>
-        <div className="stat-card">
-          <div className="stat-card-header"><div className="stat-card-icon blue"><Mail size={24} /></div></div>
-          <div className="stat-card-value">{templates.length}</div>
-          <div className="stat-card-label">Templates</div>
+      <div className="kpi-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 24 }}>
+        <div className="stat-panel">
+          <div className="stat-panel-head"><div className="stat-panel-icon blue"><Mail size={24} /></div></div>
+          <div className="stat-panel-value">{templates.length}</div>
+          <div className="stat-panel-label">Templates</div>
         </div>
-        <div className="stat-card">
-          <div className="stat-card-header"><div className="stat-card-icon green"><CheckCircle2 size={24} /></div></div>
-          <div className="stat-card-value">{ativos}</div>
-          <div className="stat-card-label">Ativos</div>
+        <div className="stat-panel">
+          <div className="stat-panel-head"><div className="stat-panel-icon green"><CheckCircle2 size={24} /></div></div>
+          <div className="stat-panel-value">{ativos}</div>
+          <div className="stat-panel-label">Ativos</div>
         </div>
-        <div className="stat-card">
-          <div className="stat-card-header"><div className="stat-card-icon orange"><Send size={24} /></div></div>
-          <div className="stat-card-value">{totalEnvios.toLocaleString('pt-BR')}</div>
-          <div className="stat-card-label">E-mails Enviados</div>
+        <div className="stat-panel">
+          <div className="stat-panel-head"><div className="stat-panel-icon orange"><Send size={24} /></div></div>
+          <div className="stat-panel-value">{totalEnvios.toLocaleString('pt-BR')}</div>
+          <div className="stat-panel-label">E-mails Enviados</div>
         </div>
       </div>
 
@@ -277,8 +278,8 @@ export default function EmailsAutomaticos() {
         </button>
       </div>
 
-      <div className="filter-bar">
-        <div className="search-bar" style={{ maxWidth: 500 }}>
+      <div className="filter-row">
+        <div className="search" style={{ maxWidth: 500 }}>
           <Search className="search-icon" size={18} />
           <input type="text" placeholder={tab === 'templates' ? "Buscar template..." : "Buscar no histórico..."} value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
@@ -288,7 +289,7 @@ export default function EmailsAutomaticos() {
       {tab === 'templates' && (
         <div style={{ display: 'grid', gap: 12 }}>
           {filteredTemplates.map((t) => (
-            <div key={t.id} className="card" style={{ padding: 20, opacity: t.ativo ? 1 : 0.6, transition: 'opacity 0.2s' }}>
+            <div key={t.id} className="panel" style={{ padding: 20, opacity: t.ativo ? 1 : 0.6, transition: 'opacity 0.2s' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16 }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
@@ -328,8 +329,8 @@ export default function EmailsAutomaticos() {
 
       {/* Logs */}
       {tab === 'logs' && (
-        <div className="card">
-          <div className="table-container">
+        <div className="panel">
+          <div className="table-wrap">
             <table>
               <thead>
                 <tr>
@@ -354,7 +355,7 @@ export default function EmailsAutomaticos() {
                     <td style={{ color: '#6b7280' }}>{l.data}</td>
                     <td style={{ color: '#6b7280' }}>{l.hora}</td>
                     <td>
-                      <span className={`status-badge ${l.status === 'delivered' ? 'completed' : l.status === 'sent' ? 'processing' : 'rejected'}`}>
+                      <span className={`pill pill-${l.status === 'delivered' ? 'completed' : l.status === 'sent' ? 'processing' : 'rejected'}`}>
                         {l.status === 'error' && <AlertTriangle size={12} style={{ marginRight: 4 }} />}
                         {statusLabels[l.status]}
                       </span>
@@ -369,21 +370,21 @@ export default function EmailsAutomaticos() {
 
       {/* Modal criar/editar template */}
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+        <div className="overlay" onClick={() => setShowModal(false)}>
           <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 650 }}>
-            <div className="modal-header">
+            <div className="modal-head">
               <h3>{editId ? 'Editar Template' : 'Novo Template'}</h3>
               <button className="btn btn-ghost btn-icon" onClick={() => setShowModal(false)}><XCircle size={20} /></button>
             </div>
             <div className="modal-body">
-              <div className="form-group">
-                <label className="form-label">Nome do Template *</label>
-                <input className="form-input" placeholder="Ex: Aviso de nova cotação" value={form.nome} onChange={(e) => setForm(p => ({ ...p, nome: e.target.value }))} />
+              <div className="field">
+                <label className="field-label">Nome do Template *</label>
+                <input className="input" placeholder="Ex: Aviso de nova cotação" value={form.nome} onChange={(e) => setForm(p => ({ ...p, nome: e.target.value }))} />
               </div>
-              <div className="form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                <div className="form-group">
-                  <label className="form-label">Gatilho *</label>
-                  <select className="form-select" value={form.gatilho} onChange={(e) => setForm(p => ({ ...p, gatilho: e.target.value }))}>
+              <div className="field-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="field">
+                  <label className="field-label">Gatilho *</label>
+                  <select className="input" value={form.gatilho} onChange={(e) => setForm(p => ({ ...p, gatilho: e.target.value }))}>
                     <option value="">Selecione...</option>
                     <option>Nova solicitação criada</option>
                     <option>Solicitação aprovada</option>
@@ -394,9 +395,9 @@ export default function EmailsAutomaticos() {
                     <option>Diário (8h) se houver pendências</option>
                   </select>
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Destinatários *</label>
-                  <select className="form-select" value={form.destinatarios} onChange={(e) => setForm(p => ({ ...p, destinatarios: e.target.value }))}>
+                <div className="field">
+                  <label className="field-label">Destinatários *</label>
+                  <select className="input" value={form.destinatarios} onChange={(e) => setForm(p => ({ ...p, destinatarios: e.target.value }))}>
                     <option value="">Selecione...</option>
                     <option>Comprador responsável</option>
                     <option>Comprador + Gestor</option>
@@ -406,19 +407,19 @@ export default function EmailsAutomaticos() {
                   </select>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="form-label">Assunto do E-mail *</label>
-                <input className="form-input" placeholder="Use {codigo}, {fornecedor}, {valor} como variáveis" value={form.assunto} onChange={(e) => setForm(p => ({ ...p, assunto: e.target.value }))} />
+              <div className="field">
+                <label className="field-label">Assunto do E-mail *</label>
+                <input className="input" placeholder="Use {codigo}, {fornecedor}, {valor} como variáveis" value={form.assunto} onChange={(e) => setForm(p => ({ ...p, assunto: e.target.value }))} />
               </div>
-              <div className="form-group">
-                <label className="form-label">Corpo do E-mail *</label>
-                <textarea className="form-textarea" style={{ minHeight: 160, fontFamily: 'monospace', fontSize: 13 }} placeholder="Use variáveis como {comprador}, {codigo}, {setor}, {valor}, {fornecedor}..." value={form.corpo} onChange={(e) => setForm(p => ({ ...p, corpo: e.target.value }))} />
+              <div className="field">
+                <label className="field-label">Corpo do E-mail *</label>
+                <textarea className="input" style={{ minHeight: 160, fontFamily: 'monospace', fontSize: 13 }} placeholder="Use variáveis como {comprador}, {codigo}, {setor}, {valor}, {fornecedor}..." value={form.corpo} onChange={(e) => setForm(p => ({ ...p, corpo: e.target.value }))} />
                 <div style={{ fontSize: 11, color: '#9ca3af', marginTop: 4 }}>
                   Variáveis disponíveis: {'{comprador}'}, {'{codigo}'}, {'{setor}'}, {'{valor}'}, {'{fornecedor}'}, {'{descricao}'}, {'{prazo}'}, {'{numero}'}, {'{dataEmissao}'}, {'{vencedor}'}, {'{qtd}'}, {'{lista}'}
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-foot">
               <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancelar</button>
               <button className="btn btn-primary" onClick={handleSalvar}>
                 <Save size={16} /> {editId ? 'Salvar Alterações' : 'Criar Template'}
@@ -433,9 +434,9 @@ export default function EmailsAutomaticos() {
         const t = templates.find(x => x.id === showDetailModal)
         if (!t) return null
         return (
-          <div className="modal-overlay" onClick={() => setShowDetailModal(null)}>
+          <div className="overlay" onClick={() => setShowDetailModal(null)}>
             <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 600 }}>
-              <div className="modal-header">
+              <div className="modal-head">
                 <h3>{t.nome}</h3>
                 <button className="btn btn-ghost btn-icon" onClick={() => setShowDetailModal(null)}><XCircle size={20} /></button>
               </div>
@@ -443,7 +444,7 @@ export default function EmailsAutomaticos() {
                 <div className="detail-grid">
                   <div className="detail-item"><label>Gatilho</label><span>{t.gatilho}</span></div>
                   <div className="detail-item"><label>Destinatários</label><span>{t.destinatarios}</span></div>
-                  <div className="detail-item"><label>Status</label><span className={`status-badge ${t.ativo ? 'completed' : 'rejected'}`}>{t.ativo ? 'Ativo' : 'Inativo'}</span></div>
+                  <div className="detail-item"><label>Status</label><span className={`pill pill-${t.ativo ? 'completed' : 'rejected'}`}>{t.ativo ? 'Ativo' : 'Inativo'}</span></div>
                   <div className="detail-item"><label>Total de Envios</label><span>{t.totalEnvios}</span></div>
                 </div>
                 <div style={{ marginTop: 16 }}>
@@ -455,7 +456,7 @@ export default function EmailsAutomaticos() {
                   <pre style={{ padding: '12px 14px', background: '#f9fafb', borderRadius: 8, border: '1px solid #e5e7eb', fontSize: 12, whiteSpace: 'pre-wrap', fontFamily: 'monospace', lineHeight: 1.5, margin: 0 }}>{t.corpo}</pre>
                 </div>
               </div>
-              <div className="modal-footer">
+              <div className="modal-foot">
                 <button className="btn btn-secondary" onClick={() => setShowDetailModal(null)}>Fechar</button>
                 <button className="btn btn-primary" onClick={() => { setShowDetailModal(null); handleEditar(t) }}>
                   <Edit3 size={16} /> Editar

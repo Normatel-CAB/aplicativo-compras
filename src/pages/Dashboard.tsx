@@ -6,10 +6,9 @@ import {
   Receipt,
   DollarSign,
   ArrowUpRight,
-  Clock,
-  CheckCircle2,
-  XCircle,
-  AlertCircle,
+  ArrowRight,
+  ClipboardCheck,
+  PackageCheck,
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -52,10 +51,10 @@ const sectorData = [
 ]
 
 const statusData = [
-  { name: 'Aprovadas', value: 42, color: '#22c55e' },
-  { name: 'Pendentes', value: 15, color: '#f59e0b' },
-  { name: 'Rejeitadas', value: 5, color: '#ef4444' },
-  { name: 'Em Análise', value: 8, color: '#3b82f6' },
+  { name: 'Aprovadas', value: 42, color: '#4f9f44' },
+  { name: 'Pendentes', value: 15, color: '#dd9a2b' },
+  { name: 'Rejeitadas', value: 5, color: '#d94842' },
+  { name: 'Em Análise', value: 8, color: '#3f7fc4' },
 ]
 
 const recentOrders = [
@@ -80,144 +79,133 @@ const statusLabels: Record<string, string> = {
   rejected: 'Rejeitada',
 }
 
-const priorityLabels: Record<string, string> = {
-  high: 'Alta',
-  medium: 'Média',
-  low: 'Baixa',
-}
+const flowStages = [
+  { label: 'Solicitações', value: 68, icon: ShoppingCart, to: '/solicitacoes' },
+  { label: 'Cotações', value: 24, icon: ClipboardCheck, to: '/cotacoes' },
+  { label: 'Ordens de Compra', value: 142, icon: FileText, to: '/ordens' },
+  { label: 'Recebimento', value: 31, icon: PackageCheck, to: '/recebimento' },
+  { label: 'Notas Fiscais', value: 58, icon: Receipt, to: '/notas' },
+]
 
 export default function Dashboard() {
   const navigate = useNavigate()
 
   return (
     <>
-      <div className="stats-grid">
-        <div className="stat-card">
-          <div className="stat-card-header">
-            <div className="stat-card-icon green">
-              <ShoppingCart size={24} />
-            </div>
-            <div className="stat-card-change up">
-              <TrendingUp size={14} /> +12%
-            </div>
+      <div className="kpi-grid">
+        <div className="kpi-card">
+          <div className="kpi-top">
+            <div className="kpi-icon green"><ShoppingCart size={19} /></div>
+            <div className="kpi-trend up"><TrendingUp size={13} /> +12%</div>
           </div>
-          <div className="stat-card-value">R$ 82.4K</div>
-          <div className="stat-card-label">Total em Compras (Mês)</div>
+          <div className="kpi-value">R$ 82,4K</div>
+          <div className="kpi-label">Total em Compras (Mês)</div>
         </div>
-
-        <div className="stat-card">
-          <div className="stat-card-header">
-            <div className="stat-card-icon blue">
-              <FileText size={24} />
-            </div>
-            <div className="stat-card-change up">
-              <TrendingUp size={14} /> +8%
-            </div>
+        <div className="kpi-card">
+          <div className="kpi-top">
+            <div className="kpi-icon blue"><FileText size={19} /></div>
+            <div className="kpi-trend up"><TrendingUp size={13} /> +8%</div>
           </div>
-          <div className="stat-card-value">142</div>
-          <div className="stat-card-label">Ordens de Compra</div>
+          <div className="kpi-value">142</div>
+          <div className="kpi-label">Ordens de Compra Abertas</div>
         </div>
-
-        <div className="stat-card">
-          <div className="stat-card-header">
-            <div className="stat-card-icon orange">
-              <Receipt size={24} />
-            </div>
-            <div className="stat-card-change down">
-              <TrendingDown size={14} /> -3%
-            </div>
+        <div className="kpi-card">
+          <div className="kpi-top">
+            <div className="kpi-icon amber"><Receipt size={19} /></div>
+            <div className="kpi-trend down"><TrendingDown size={13} /> -3%</div>
           </div>
-          <div className="stat-card-value">58</div>
-          <div className="stat-card-label">Notas Importadas</div>
+          <div className="kpi-value">58</div>
+          <div className="kpi-label">Notas Importadas</div>
         </div>
-
-        <div className="stat-card">
-          <div className="stat-card-header">
-            <div className="stat-card-icon purple">
-              <DollarSign size={24} />
-            </div>
-            <div className="stat-card-change up">
-              <TrendingUp size={14} /> +5%
-            </div>
+        <div className="kpi-card">
+          <div className="kpi-top">
+            <div className="kpi-icon green"><DollarSign size={19} /></div>
+            <div className="kpi-trend up"><TrendingUp size={13} /> +5%</div>
           </div>
-          <div className="stat-card-value">R$ 15.2K</div>
-          <div className="stat-card-label">Economia em Cotações</div>
+          <div className="kpi-value">R$ 15,2K</div>
+          <div className="kpi-label">Economia em Cotações</div>
         </div>
       </div>
 
-      <div className="charts-grid">
-        <div className="card">
-          <div className="card-header">
-            <span className="card-title">Compras vs Orçamento</span>
-            <button className="btn btn-ghost btn-sm" onClick={() => navigate('/solicitacoes')}>
+      <div className="panel" style={{ marginBottom: 24 }}>
+        <div className="panel-head">
+          <div>
+            <div className="panel-title">Fluxo de Compras (Procure-to-Pay)</div>
+            <div className="panel-sub">Volume ativo em cada etapa do processo</div>
+          </div>
+        </div>
+        <div className="panel-body" style={{ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap' }}>
+          {flowStages.map((stage, i) => (
+            <div key={stage.label} style={{ display: 'flex', alignItems: 'center', gap: 4, flex: 1, minWidth: 140 }}>
+              <div
+                onClick={() => navigate(stage.to)}
+                style={{ flex: 1, cursor: 'pointer', textAlign: 'center', padding: '14px 8px', borderRadius: 10, border: '1px solid var(--gray-200)', transition: 'var(--ease)' }}
+                onMouseOver={(e) => (e.currentTarget.style.borderColor = 'var(--brand-300)')}
+                onMouseOut={(e) => (e.currentTarget.style.borderColor = 'var(--gray-200)')}
+              >
+                <stage.icon size={18} style={{ color: 'var(--brand-600)', marginBottom: 8 }} />
+                <div style={{ fontSize: 20, fontWeight: 800, color: 'var(--gray-900)', fontFamily: 'Manrope, sans-serif' }}>{stage.value}</div>
+                <div style={{ fontSize: 11.5, color: 'var(--gray-500)', fontWeight: 600, marginTop: 2 }}>{stage.label}</div>
+              </div>
+              {i < flowStages.length - 1 && <ArrowRight size={16} style={{ color: 'var(--gray-300)', flexShrink: 0 }} />}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid-2" style={{ marginBottom: 24 }}>
+        <div className="panel">
+          <div className="panel-head">
+            <span className="panel-title">Compras vs Orçamento</span>
+            <button className="btn btn-ghost btn-sm" onClick={() => navigate('/relatorios')}>
               Ver Detalhes <ArrowUpRight size={14} />
             </button>
           </div>
-          <div className="card-body" style={{ height: 300 }}>
+          <div className="panel-body" style={{ height: 280 }}>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={monthlyData}>
                 <defs>
                   <linearGradient id="colorCompras" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#4f9f44" stopOpacity={0.28} />
+                    <stop offset="95%" stopColor="#4f9f44" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f3f4" />
                 <XAxis dataKey="name" fontSize={12} tickLine={false} axisLine={false} />
                 <YAxis fontSize={12} tickLine={false} axisLine={false} tickFormatter={(v) => `${v / 1000}K`} />
-                <Tooltip
-                  formatter={(value) => [`R$ ${Number(value).toLocaleString('pt-BR')}`, '']}
-                  contentStyle={{ borderRadius: 8, border: '1px solid #e5e7eb' }}
-                />
-                <Area type="monotone" dataKey="orcamento" stroke="#d1d5db" strokeWidth={2} fill="none" strokeDasharray="5 5" name="Orçamento" />
-                <Area type="monotone" dataKey="compras" stroke="#22c55e" strokeWidth={2} fill="url(#colorCompras)" name="Compras" />
+                <Tooltip formatter={(value) => [`R$ ${Number(value).toLocaleString('pt-BR')}`, '']} contentStyle={{ borderRadius: 8, border: '1px solid #e4e7ea' }} />
+                <Area type="monotone" dataKey="orcamento" stroke="#d1d6db" strokeWidth={2} fill="none" strokeDasharray="5 5" name="Orçamento" />
+                <Area type="monotone" dataKey="compras" stroke="#4f9f44" strokeWidth={2} fill="url(#colorCompras)" name="Compras" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        <div className="card">
-          <div className="card-header">
-            <span className="card-title">Compras por Setor</span>
-          </div>
-          <div className="card-body" style={{ height: 300 }}>
+        <div className="panel">
+          <div className="panel-head"><span className="panel-title">Compras por Setor</span></div>
+          <div className="panel-body" style={{ height: 280 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={sectorData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f3f4" />
                 <XAxis dataKey="name" fontSize={12} tickLine={false} axisLine={false} />
                 <YAxis fontSize={12} tickLine={false} axisLine={false} tickFormatter={(v) => `${v / 1000}K`} />
-                <Tooltip
-                  formatter={(value) => [`R$ ${Number(value).toLocaleString('pt-BR')}`, 'Valor']}
-                  contentStyle={{ borderRadius: 8, border: '1px solid #e5e7eb' }}
-                />
-                <Bar dataKey="valor" fill="#22c55e" radius={[6, 6, 0, 0]} />
+                <Tooltip formatter={(value) => [`R$ ${Number(value).toLocaleString('pt-BR')}`, 'Valor']} contentStyle={{ borderRadius: 8, border: '1px solid #e4e7ea' }} />
+                <Bar dataKey="valor" fill="#4f9f44" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
       </div>
 
-      <div className="charts-grid">
-        <div className="card">
-          <div className="card-header">
-            <span className="card-title">Status das Solicitações</span>
-          </div>
-          <div className="card-body" style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
-            <div style={{ width: 180, height: 180 }}>
+      <div className="grid-2" style={{ marginBottom: 24 }}>
+        <div className="panel">
+          <div className="panel-head"><span className="panel-title">Status das Solicitações</span></div>
+          <div className="panel-body" style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
+            <div style={{ width: 160, height: 160, flexShrink: 0 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
-                  <Pie
-                    data={statusData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={50}
-                    outerRadius={80}
-                    paddingAngle={4}
-                    dataKey="value"
-                  >
-                    {statusData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
+                  <Pie data={statusData} cx="50%" cy="50%" innerRadius={46} outerRadius={72} paddingAngle={4} dataKey="value">
+                    {statusData.map((entry, index) => <Cell key={index} fill={entry.color} />)}
                   </Pie>
                   <Tooltip />
                 </PieChart>
@@ -225,46 +213,32 @@ export default function Dashboard() {
             </div>
             <div style={{ flex: 1 }}>
               {statusData.map((item) => (
-                <div key={item.name} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: item.color, flexShrink: 0 }} />
-                  <span style={{ flex: 1, fontSize: 14, color: '#374151' }}>{item.name}</span>
-                  <span style={{ fontWeight: 700, fontSize: 16, color: '#111827' }}>{item.value}</span>
+                <div key={item.name} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 11 }}>
+                  <div style={{ width: 9, height: 9, borderRadius: '50%', background: item.color, flexShrink: 0 }} />
+                  <span style={{ flex: 1, fontSize: 13, color: 'var(--gray-700)' }}>{item.name}</span>
+                  <span style={{ fontWeight: 700, fontSize: 15 }}>{item.value}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="card">
-          <div className="card-header">
-            <span className="card-title">Aprovações Pendentes</span>
-            <span className="status-badge pending">
-              {pendingApprovals.length} pendentes
-            </span>
+        <div className="panel">
+          <div className="panel-head">
+            <span className="panel-title">Aprovações Pendentes</span>
+            <span className="pill pill-pending">{pendingApprovals.length} pendentes</span>
           </div>
-          <div className="table-container">
+          <div className="table-wrap">
             <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Setor</th>
-                  <th>Descrição</th>
-                  <th>Valor</th>
-                  <th>Prioridade</th>
-                </tr>
-              </thead>
+              <thead><tr><th>ID</th><th>Setor</th><th>Descrição</th><th>Valor</th><th>Prioridade</th></tr></thead>
               <tbody>
                 {pendingApprovals.map((item) => (
-                  <tr key={item.id}>
-                    <td style={{ fontWeight: 600 }}>{item.id}</td>
+                  <tr key={item.id} className="clickable" onClick={() => navigate('/aprovacoes')}>
+                    <td className="cell-strong">{item.id}</td>
                     <td>{item.setor}</td>
                     <td>{item.descricao}</td>
-                    <td style={{ fontWeight: 600 }}>{item.valor}</td>
-                    <td>
-                      <span className={`priority-badge ${item.prioridade}`}>
-                        {priorityLabels[item.prioridade]}
-                      </span>
-                    </td>
+                    <td className="cell-strong">{item.valor}</td>
+                    <td><span className={`tag tag-${item.prioridade}`}>{item.prioridade === 'high' ? 'Alta' : item.prioridade === 'medium' ? 'Média' : 'Baixa'}</span></td>
                   </tr>
                 ))}
               </tbody>
@@ -273,36 +247,22 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="card" style={{ marginTop: 24 }}>
-        <div className="card-header">
-          <span className="card-title">Últimas Ordens de Compra</span>
-          <button className="btn btn-ghost btn-sm" onClick={() => navigate('/ordens')}>
-            Ver Todas <ArrowUpRight size={14} />
-          </button>
+      <div className="panel">
+        <div className="panel-head">
+          <span className="panel-title">Últimas Ordens de Compra</span>
+          <button className="btn btn-ghost btn-sm" onClick={() => navigate('/ordens')}>Ver Todas <ArrowUpRight size={14} /></button>
         </div>
-        <div className="table-container">
+        <div className="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Fornecedor</th>
-                <th>Valor</th>
-                <th>Status</th>
-                <th>Data</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Código</th><th>Fornecedor</th><th>Valor</th><th>Status</th><th>Data</th></tr></thead>
             <tbody>
               {recentOrders.map((order) => (
-                <tr key={order.id}>
-                  <td style={{ fontWeight: 600, color: '#16a34a' }}>{order.id}</td>
+                <tr key={order.id} className="clickable" onClick={() => navigate('/ordens')}>
+                  <td className="cell-code">{order.id}</td>
                   <td>{order.fornecedor}</td>
-                  <td style={{ fontWeight: 600 }}>{order.valor}</td>
-                  <td>
-                    <span className={`status-badge ${order.status}`}>
-                      {statusLabels[order.status]}
-                    </span>
-                  </td>
-                  <td style={{ color: '#6b7280' }}>{order.data}</td>
+                  <td className="cell-strong">{order.valor}</td>
+                  <td><span className={`pill pill-${order.status}`}>{statusLabels[order.status]}</span></td>
+                  <td className="muted">{order.data}</td>
                 </tr>
               ))}
             </tbody>

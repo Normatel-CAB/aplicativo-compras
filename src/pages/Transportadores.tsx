@@ -30,10 +30,11 @@ export default function Transportadores() {
 
   return (
     <>
-      <div className="page-header">
-        <div className="page-header-info">
-          <h2>Transportadores</h2>
-          <p>Cadastro e controle de transportadoras vinculadas às compras</p>
+      <div className="page-head">
+        <div>
+          <div className="page-eyebrow">Cadastros</div>
+          <h1 className="page-title">Transportadores</h1>
+          <p className="page-desc">Cadastro e controle de transportadoras vinculadas às compras</p>
         </div>
         <div className="page-actions">
           <button className="btn btn-primary" onClick={() => setShowModal(true)}>
@@ -42,8 +43,8 @@ export default function Transportadores() {
         </div>
       </div>
 
-      <div className="filter-bar">
-        <div className="search-bar" style={{ maxWidth: 500 }}>
+      <div className="filter-row">
+        <div className="search" style={{ maxWidth: 500 }}>
           <Search className="search-icon" size={18} />
           <input
             type="text"
@@ -56,8 +57,8 @@ export default function Transportadores() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 20 }}>
         {filteredData.map((t) => (
-          <div key={t.id} className="card" style={{ transition: 'all 0.2s ease' }}>
-            <div className="card-body">
+          <div key={t.id} className="panel" style={{ transition: 'all 0.2s ease' }}>
+            <div className="panel-body">
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <div style={{
@@ -73,7 +74,7 @@ export default function Transportadores() {
                     <div style={{ fontSize: 12, color: '#6b7280' }}>{t.razaoSocial}</div>
                   </div>
                 </div>
-                <span className={`status-badge ${t.status}`}>{t.status === 'active' ? 'Ativo' : 'Inativo'}</span>
+                <span className={`pill pill-${t.status}`}>{t.status === 'active' ? 'Ativo' : 'Inativo'}</span>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
@@ -110,64 +111,64 @@ export default function Transportadores() {
       </div>
 
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+        <div className="overlay" onClick={() => setShowModal(false)}>
           <div className="modal slide-in" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
+            <div className="modal-head">
               <h3>Novo Transportador</h3>
               <button className="btn btn-ghost btn-icon" onClick={() => setShowModal(false)}>
                 <XCircle size={20} />
               </button>
             </div>
             <div className="modal-body">
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Razão Social</label>
-                  <input className="form-input" type="text" placeholder="Razão social" />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Razão Social</label>
+                  <input className="input" type="text" placeholder="Razão social" />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Nome Fantasia</label>
-                  <input className="form-input" type="text" placeholder="Nome fantasia" />
+                <div className="field">
+                  <label className="field-label">Nome Fantasia</label>
+                  <input className="input" type="text" placeholder="Nome fantasia" />
                 </div>
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">CNPJ</label>
-                  <input className="form-input" type="text" placeholder="00.000.000/0000-00" />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">CNPJ</label>
+                  <input className="input" type="text" placeholder="00.000.000/0000-00" />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Tipo de Frete</label>
-                  <select className="form-select">
+                <div className="field">
+                  <label className="field-label">Tipo de Frete</label>
+                  <select className="input">
                     <option>CIF</option>
                     <option>FOB</option>
                     <option>CIF/FOB</option>
                   </select>
                 </div>
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Telefone</label>
-                  <input className="form-input" type="text" placeholder="(00) 0000-0000" />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Telefone</label>
+                  <input className="input" type="text" placeholder="(00) 0000-0000" />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">E-mail</label>
-                  <input className="form-input" type="email" placeholder="email@transportador.com" />
+                <div className="field">
+                  <label className="field-label">E-mail</label>
+                  <input className="input" type="email" placeholder="email@transportador.com" />
                 </div>
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Cidade</label>
-                  <input className="form-input" type="text" placeholder="Cidade" />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Cidade</label>
+                  <input className="input" type="text" placeholder="Cidade" />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Estado</label>
-                  <select className="form-select">
+                <div className="field">
+                  <label className="field-label">Estado</label>
+                  <select className="input">
                     <option>Selecione...</option>
                     <option>SP</option><option>RJ</option><option>MG</option><option>PR</option><option>SC</option><option>RS</option>
                   </select>
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-foot">
               <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancelar</button>
               <button className="btn btn-primary" onClick={() => setShowModal(false)}>Cadastrar</button>
             </div>

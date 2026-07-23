@@ -183,16 +183,17 @@ export default function EnvioNotas() {
 
   return (
     <>
-      <div className="page-header">
-        <div className="page-header-info">
-          <h2>Envio de Notas Fiscais</h2>
-          <p>Gerencie o envio eletrônico de notas fiscais para fornecedores e destinatários</p>
+      <div className="page-head">
+        <div>
+          <div className="page-eyebrow">Operações</div>
+          <h1 className="page-title">Envio de Notas Fiscais</h1>
+          <p className="page-desc">Gerencie o envio eletrônico de notas fiscais para fornecedores e destinatários</p>
         </div>
         <div className="page-actions">
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <label style={{ fontSize: 13, fontWeight: 600, color: '#374151' }}>Provedor:</label>
             <select
-              className="form-select"
+              className="input"
               style={{ width: 130, padding: '6px 10px', fontSize: 13 }}
               value={provider}
               onChange={(e) => setProvider(e.target.value as EmailProvider)}
@@ -223,51 +224,51 @@ export default function EnvioNotas() {
       )}
 
       {/* Stats */}
-      <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', marginBottom: 24 }}>
-        <div className="stat-card" style={{ cursor: 'pointer' }} onClick={() => setFilter('pending')}>
-          <div className="stat-card-header">
-            <div className="stat-card-icon orange"><Clock size={24} /></div>
+      <div className="kpi-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', marginBottom: 24 }}>
+        <div className="stat-panel" style={{ cursor: 'pointer' }} onClick={() => setFilter('pending')}>
+          <div className="stat-panel-head">
+            <div className="stat-panel-icon orange"><Clock size={24} /></div>
           </div>
-          <div className="stat-card-value">{pendentes}</div>
-          <div className="stat-card-label">Pendentes</div>
+          <div className="stat-panel-value">{pendentes}</div>
+          <div className="stat-panel-label">Pendentes</div>
         </div>
-        <div className="stat-card" style={{ cursor: 'pointer' }} onClick={() => setFilter('sent')}>
-          <div className="stat-card-header">
-            <div className="stat-card-icon blue"><Send size={24} /></div>
+        <div className="stat-panel" style={{ cursor: 'pointer' }} onClick={() => setFilter('sent')}>
+          <div className="stat-panel-head">
+            <div className="stat-panel-icon blue"><Send size={24} /></div>
           </div>
-          <div className="stat-card-value">{enviadas}</div>
-          <div className="stat-card-label">Enviadas</div>
+          <div className="stat-panel-value">{enviadas}</div>
+          <div className="stat-panel-label">Enviadas</div>
         </div>
-        <div className="stat-card" style={{ cursor: 'pointer' }} onClick={() => setFilter('delivered')}>
-          <div className="stat-card-header">
-            <div className="stat-card-icon green"><CheckCircle2 size={24} /></div>
+        <div className="stat-panel" style={{ cursor: 'pointer' }} onClick={() => setFilter('delivered')}>
+          <div className="stat-panel-head">
+            <div className="stat-panel-icon green"><CheckCircle2 size={24} /></div>
           </div>
-          <div className="stat-card-value">{entregues}</div>
-          <div className="stat-card-label">Entregues</div>
+          <div className="stat-panel-value">{entregues}</div>
+          <div className="stat-panel-label">Entregues</div>
         </div>
-        <div className="stat-card" style={{ cursor: 'pointer' }} onClick={() => setFilter('error')}>
-          <div className="stat-card-header">
-            <div className="stat-card-icon" style={{ background: '#fef2f2', color: '#ef4444' }}><AlertTriangle size={24} /></div>
+        <div className="stat-panel" style={{ cursor: 'pointer' }} onClick={() => setFilter('error')}>
+          <div className="stat-panel-head">
+            <div className="stat-panel-icon" style={{ background: '#fef2f2', color: '#ef4444' }}><AlertTriangle size={24} /></div>
           </div>
-          <div className="stat-card-value">{erros}</div>
-          <div className="stat-card-label">Com Erro</div>
+          <div className="stat-panel-value">{erros}</div>
+          <div className="stat-panel-label">Com Erro</div>
         </div>
       </div>
 
-      <div className="filter-bar">
-        <div className="search-bar" style={{ maxWidth: 500 }}>
+      <div className="filter-row">
+        <div className="search" style={{ maxWidth: 500 }}>
           <Search className="search-icon" size={18} />
           <input type="text" placeholder="Buscar por nota, fornecedor ou destinatário..." value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
         {['all', 'pending', 'sent', 'delivered', 'error'].map((f) => (
-          <button key={f} className={`filter-chip ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>
+          <button key={f} className={`chip ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>
             {f === 'all' ? 'Todas' : statusLabels[f]}
           </button>
         ))}
       </div>
 
-      <div className="card">
-        <div className="table-container">
+      <div className="panel">
+        <div className="table-wrap">
           <table>
             <thead>
               <tr>
@@ -307,7 +308,7 @@ export default function EnvioNotas() {
                     <td style={{ color: '#6b7280' }}>{n.dataEnvio}</td>
                     <td style={{ textAlign: 'center' }}>{n.tentativas}</td>
                     <td>
-                      <span className={`status-badge ${n.status === 'delivered' ? 'completed' : n.status === 'sent' ? 'processing' : n.status === 'error' ? 'rejected' : 'pending'}`}>
+                      <span className={`pill pill-${n.status === 'delivered' ? 'completed' : n.status === 'sent' ? 'processing' : n.status === 'error' ? 'rejected' : 'pending'}`}>
                         <StatusIcon size={12} style={{ marginRight: 4 }} />
                         {statusLabels[n.status]}
                       </span>
@@ -335,8 +336,8 @@ export default function EnvioNotas() {
             </tbody>
           </table>
         </div>
-        <div className="pagination">
-          <div className="pagination-info">Mostrando {filteredData.length} de {notas.length} notas</div>
+        <div className="pager">
+          <div className="pager-info">Mostrando {filteredData.length} de {notas.length} notas</div>
         </div>
       </div>
 
@@ -345,9 +346,9 @@ export default function EnvioNotas() {
         const n = notas.find(x => x.id === showDetailModal)
         if (!n) return null
         return (
-          <div className="modal-overlay" onClick={() => setShowDetailModal(null)}>
+          <div className="overlay" onClick={() => setShowDetailModal(null)}>
             <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 600 }}>
-              <div className="modal-header">
+              <div className="modal-head">
                 <h3>Detalhes - {n.numero}</h3>
                 <button className="btn btn-ghost btn-icon" onClick={() => setShowDetailModal(null)}><XCircle size={20} /></button>
               </div>
@@ -362,13 +363,13 @@ export default function EnvioNotas() {
                   <div className="detail-item"><label>Data Envio</label><span>{n.dataEnvio}</span></div>
                   <div className="detail-item"><label>Tentativas</label><span>{n.tentativas}</span></div>
                   <div className="detail-item"><label>Status</label>
-                    <span className={`status-badge ${n.status === 'delivered' ? 'completed' : n.status === 'sent' ? 'processing' : n.status === 'error' ? 'rejected' : 'pending'}`}>
+                    <span className={`pill pill-${n.status === 'delivered' ? 'completed' : n.status === 'sent' ? 'processing' : n.status === 'error' ? 'rejected' : 'pending'}`}>
                       {statusLabels[n.status]}
                     </span>
                   </div>
                 </div>
               </div>
-              <div className="modal-footer">
+              <div className="modal-foot">
                 {n.status === 'pending' && (
                   <button className="btn btn-primary" onClick={() => { setShowDetailModal(null); setEmailCustom(n.emailDest); setMensagem(''); setShowEnvioModal(n.id) }}>
                     <Send size={16} /> Enviar Nota
@@ -391,9 +392,9 @@ export default function EnvioNotas() {
         const n = notas.find(x => x.id === showEnvioModal)
         if (!n) return null
         return (
-          <div className="modal-overlay" onClick={() => setShowEnvioModal(null)}>
+          <div className="overlay" onClick={() => setShowEnvioModal(null)}>
             <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 550 }}>
-              <div className="modal-header">
+              <div className="modal-head">
                 <h3>Enviar {n.numero}</h3>
                 <button className="btn btn-ghost btn-icon" onClick={() => setShowEnvioModal(null)}><XCircle size={20} /></button>
               </div>
@@ -401,23 +402,23 @@ export default function EnvioNotas() {
                 <div style={{ padding: '12px 16px', background: '#f0fdf4', borderRadius: 8, border: '1px solid #bbf7d0', marginBottom: 20, fontSize: 13, color: '#166534' }}>
                   <strong>{n.fornecedor}</strong> — {n.valor}
                 </div>
-                <div className="form-group">
-                  <label className="form-label">E-mail do Destinatário</label>
-                  <input className="form-input" type="email" value={emailCustom} onChange={(e) => setEmailCustom(e.target.value)} />
+                <div className="field">
+                  <label className="field-label">E-mail do Destinatário</label>
+                  <input className="input" type="email" value={emailCustom} onChange={(e) => setEmailCustom(e.target.value)} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Provedor de E-mail</label>
-                  <select className="form-select" value={provider} onChange={(e) => setProvider(e.target.value as EmailProvider)}>
+                <div className="field">
+                  <label className="field-label">Provedor de E-mail</label>
+                  <select className="input" value={provider} onChange={(e) => setProvider(e.target.value as EmailProvider)}>
                     <option value="gmail">Gmail</option>
                     <option value="outlook">Outlook</option>
                   </select>
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Mensagem Adicional (opcional)</label>
-                  <textarea className="form-textarea" placeholder="Mensagem que acompanhará a nota fiscal..." value={mensagem} onChange={(e) => setMensagem(e.target.value)} />
+                <div className="field">
+                  <label className="field-label">Mensagem Adicional (opcional)</label>
+                  <textarea className="input" placeholder="Mensagem que acompanhará a nota fiscal..." value={mensagem} onChange={(e) => setMensagem(e.target.value)} />
                 </div>
               </div>
-              <div className="modal-footer">
+              <div className="modal-foot">
                 <button className="btn btn-secondary" onClick={() => setShowEnvioModal(null)} disabled={enviando}>Cancelar</button>
                 <button className="btn btn-primary" onClick={() => handleEnviar(n.id)} disabled={enviando}>
                   {enviando ? <Loader2 size={16} className="spin" /> : <Send size={16} />}

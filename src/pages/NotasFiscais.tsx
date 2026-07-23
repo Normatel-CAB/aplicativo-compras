@@ -120,10 +120,11 @@ export default function NotasFiscais() {
 
   return (
     <>
-      <div className="page-header">
-        <div className="page-header-info">
-          <h2>Notas Fiscais de Entrada</h2>
-          <p>Importação e controle de notas fiscais de compra com acompanhamento tributário</p>
+      <div className="page-head">
+        <div>
+          <div className="page-eyebrow">Operações</div>
+          <h1 className="page-title">Notas Fiscais de Entrada</h1>
+          <p className="page-desc">Importação e controle de notas fiscais de compra com acompanhamento tributário</p>
         </div>
         <div className="page-actions">
           <button className="btn btn-secondary" onClick={handleExportar}>
@@ -161,8 +162,8 @@ export default function NotasFiscais() {
         </div>
       </div>
 
-      <div className="filter-bar">
-        <div className="search-bar" style={{ maxWidth: 500 }}>
+      <div className="filter-row">
+        <div className="search" style={{ maxWidth: 500 }}>
           <Search className="search-icon" size={18} />
           <input
             type="text"
@@ -173,7 +174,7 @@ export default function NotasFiscais() {
         </div>
       </div>
 
-      <div className="card">
+      <div className="panel">
         {loading ? (
           <div style={{ padding: 60, textAlign: 'center' }}>
             <Loader2 size={32} className="spin" color="#22c55e" />
@@ -181,7 +182,7 @@ export default function NotasFiscais() {
           </div>
         ) : (
         <>
-        <div className="table-container">
+        <div className="table-wrap">
           <table>
             <thead>
               <tr>
@@ -219,7 +220,7 @@ export default function NotasFiscais() {
                     <span style={{ color: '#2563eb', fontWeight: 500 }}>{n.ordemCompra}</span>
                   </td>
                   <td style={{ color: '#6b7280' }}>{n.dataEmissao}</td>
-                  <td><span className={`status-badge ${n.status}`}>{statusLabels[n.status]}</span></td>
+                  <td><span className={`pill pill-${n.status}`}>{statusLabels[n.status]}</span></td>
                   <td>
                     <div style={{ display: 'flex', gap: 4 }}>
                       <button className="btn btn-ghost btn-icon btn-sm" title="Detalhes" onClick={() => setShowDetailModal(n.id)}>
@@ -241,9 +242,9 @@ export default function NotasFiscais() {
 
       {/* Import Modal */}
       {showImportModal && (
-        <div className="modal-overlay" onClick={() => setShowImportModal(false)}>
+        <div className="overlay" onClick={() => setShowImportModal(false)}>
           <div className="modal slide-in" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
+            <div className="modal-head">
               <h3>Importar XML de Nota Fiscal</h3>
               <button className="btn btn-ghost btn-icon" onClick={() => setShowImportModal(false)}>
                 <XCircle size={20} />
@@ -328,7 +329,7 @@ export default function NotasFiscais() {
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-foot">
               <button className="btn btn-secondary" onClick={() => setShowImportModal(false)}>Cancelar</button>
               <button className="btn btn-primary" onClick={handleImportar}>
                 <Upload size={16} /> Importar
@@ -340,9 +341,9 @@ export default function NotasFiscais() {
 
       {/* Tributo Modal */}
       {tributoNota && (
-        <div className="modal-overlay" onClick={() => setShowTributoModal(null)}>
+        <div className="overlay" onClick={() => setShowTributoModal(null)}>
           <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 500 }}>
-            <div className="modal-header">
+            <div className="modal-head">
               <h3>Tributos - {tributoNota.numero}</h3>
               <button className="btn btn-ghost btn-icon" onClick={() => setShowTributoModal(null)}>
                 <XCircle size={20} />
@@ -370,7 +371,7 @@ export default function NotasFiscais() {
                 <span style={{ fontWeight: 700, fontSize: 18, color: '#16a34a' }}>{tributoNota.valor}</span>
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-foot">
               <button className="btn btn-secondary" onClick={() => setShowTributoModal(null)}>Fechar</button>
             </div>
           </div>
@@ -379,9 +380,9 @@ export default function NotasFiscais() {
 
       {/* Detail Modal */}
       {selectedNota && (
-        <div className="modal-overlay" onClick={() => setShowDetailModal(null)}>
+        <div className="overlay" onClick={() => setShowDetailModal(null)}>
           <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 700 }}>
-            <div className="modal-header">
+            <div className="modal-head">
               <h3>Detalhes - {selectedNota.numero}</h3>
               <button className="btn btn-ghost btn-icon" onClick={() => setShowDetailModal(null)}>
                 <XCircle size={20} />
@@ -437,7 +438,7 @@ export default function NotasFiscais() {
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-foot">
               <button className="btn btn-secondary" onClick={() => setShowDetailModal(null)}>Fechar</button>
             </div>
           </div>

@@ -137,10 +137,11 @@ export default function Configuracoes() {
 
   return (
     <>
-      <div className="page-header">
-        <div className="page-header-info">
-          <h2>Configurações</h2>
-          <p>Definição de limites de compra por setor e alçadas de aprovação</p>
+      <div className="page-head">
+        <div>
+          <div className="page-eyebrow">Sistema</div>
+          <h1 className="page-title">Configurações</h1>
+          <p className="page-desc">Definição de limites de compra por setor e alçadas de aprovação</p>
         </div>
       </div>
 
@@ -176,8 +177,8 @@ export default function Configuracoes() {
             </button>
           </div>
 
-          <div className="card">
-            <div className="table-container">
+          <div className="panel">
+            <div className="table-wrap">
               <table>
                 <thead>
                   <tr>
@@ -212,7 +213,7 @@ export default function Configuracoes() {
                           {s.responsavel}
                         </div>
                       </td>
-                      <td><span className="status-badge active">Ativo</span></td>
+                      <td><span className="pill pill-active">Ativo</span></td>
                       <td>
                         <div style={{ display: 'flex', gap: 4 }}>
                           <button className="btn btn-ghost btn-icon btn-sm" onClick={() => handleOpenSetorModal(s.id)}><Edit3 size={16} /></button>
@@ -243,8 +244,8 @@ export default function Configuracoes() {
 
           <div style={{ display: 'grid', gap: 16 }}>
             {alcadas.map((a) => (
-              <div key={a.id} className="card">
-                <div className="card-body" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+              <div key={a.id} className="panel">
+                <div className="panel-body" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
                   <div style={{
                     width: 56, height: 56, borderRadius: 12,
                     background: `linear-gradient(135deg, ${a.id === 1 ? '#dcfce7' : a.id === 2 ? '#dbeafe' : a.id === 3 ? '#fef3c7' : '#fee2e2'}, ${a.id === 1 ? '#bbf7d0' : a.id === 2 ? '#bfdbfe' : a.id === 3 ? '#fde68a' : '#fecaca'})`,
@@ -277,37 +278,37 @@ export default function Configuracoes() {
 
       {activeTab === 'geral' && (
         <div className="fade-in">
-          <div className="card">
-            <div className="card-header">
-              <span className="card-title">Configurações Gerais</span>
+          <div className="panel">
+            <div className="panel-head">
+              <span className="panel-title">Configurações Gerais</span>
             </div>
-            <div className="card-body">
-              <div className="form-group">
-                <label className="form-label">Nome da Empresa</label>
-                <input className="form-input" type="text" value={configGeral.nomeEmpresa} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, nomeEmpresa: e.target.value }))} />
+            <div className="panel-body">
+              <div className="field">
+                <label className="field-label">Nome da Empresa</label>
+                <input className="input" type="text" value={configGeral.nomeEmpresa} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, nomeEmpresa: e.target.value }))} />
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">CNPJ</label>
-                  <input className="form-input" type="text" value={configGeral.cnpj} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, cnpj: e.target.value }))} />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">CNPJ</label>
+                  <input className="input" type="text" value={configGeral.cnpj} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, cnpj: e.target.value }))} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Inscrição Estadual</label>
-                  <input className="form-input" type="text" value={configGeral.inscricaoEstadual} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, inscricaoEstadual: e.target.value }))} />
+                <div className="field">
+                  <label className="field-label">Inscrição Estadual</label>
+                  <input className="input" type="text" value={configGeral.inscricaoEstadual} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, inscricaoEstadual: e.target.value }))} />
                 </div>
               </div>
-              <div className="form-group">
-                <label className="form-label">E-mail para Cotações</label>
-                <input className="form-input" type="email" value={configGeral.emailCotacoes} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, emailCotacoes: e.target.value }))} />
+              <div className="field">
+                <label className="field-label">E-mail para Cotações</label>
+                <input className="input" type="email" value={configGeral.emailCotacoes} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, emailCotacoes: e.target.value }))} />
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Prazo Padrão para Cotações (dias)</label>
-                  <input className="form-input" type="number" value={configGeral.prazoCotacoes} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, prazoCotacoes: e.target.value }))} />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Prazo Padrão para Cotações (dias)</label>
+                  <input className="input" type="number" value={configGeral.prazoCotacoes} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, prazoCotacoes: e.target.value }))} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Moeda Padrão</label>
-                  <select className="form-select" value={configGeral.moeda} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, moeda: e.target.value }))}>
+                <div className="field">
+                  <label className="field-label">Moeda Padrão</label>
+                  <select className="input" value={configGeral.moeda} onChange={(e) => setConfigGeral((p: typeof configGeral) => ({ ...p, moeda: e.target.value }))}>
                     <option value="BRL">BRL - Real Brasileiro</option>
                     <option value="USD">USD - Dólar Americano</option>
                   </select>
@@ -339,33 +340,33 @@ export default function Configuracoes() {
 
       {/* Modal Setor */}
       {showSetorModal && (
-        <div className="modal-overlay" onClick={() => setShowSetorModal(false)}>
+        <div className="overlay" onClick={() => setShowSetorModal(false)}>
           <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 500 }}>
-            <div className="modal-header">
+            <div className="modal-head">
               <h3>{editSetor ? 'Editar Setor' : 'Novo Setor'}</h3>
               <button className="btn btn-ghost btn-icon" onClick={() => setShowSetorModal(false)}><XCircle size={20} /></button>
             </div>
             <div className="modal-body">
-              <div className="form-group">
-                <label className="form-label">Setor *</label>
-                <input className="form-input" type="text" placeholder="Nome do setor" value={setorForm.setor} onChange={(e) => setSetorForm(p => ({ ...p, setor: e.target.value }))} />
+              <div className="field">
+                <label className="field-label">Setor *</label>
+                <input className="input" type="text" placeholder="Nome do setor" value={setorForm.setor} onChange={(e) => setSetorForm(p => ({ ...p, setor: e.target.value }))} />
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Limite Mensal</label>
-                  <input className="form-input" type="text" placeholder="R$ 0,00" value={setorForm.limiteCompra} onChange={(e) => setSetorForm(p => ({ ...p, limiteCompra: e.target.value }))} />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Limite Mensal</label>
+                  <input className="input" type="text" placeholder="R$ 0,00" value={setorForm.limiteCompra} onChange={(e) => setSetorForm(p => ({ ...p, limiteCompra: e.target.value }))} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Limite Aprovação</label>
-                  <input className="form-input" type="text" placeholder="R$ 0,00" value={setorForm.limiteAprovacao} onChange={(e) => setSetorForm(p => ({ ...p, limiteAprovacao: e.target.value }))} />
+                <div className="field">
+                  <label className="field-label">Limite Aprovação</label>
+                  <input className="input" type="text" placeholder="R$ 0,00" value={setorForm.limiteAprovacao} onChange={(e) => setSetorForm(p => ({ ...p, limiteAprovacao: e.target.value }))} />
                 </div>
               </div>
-              <div className="form-group">
-                <label className="form-label">Responsável</label>
-                <input className="form-input" type="text" placeholder="Nome do responsável" value={setorForm.responsavel} onChange={(e) => setSetorForm(p => ({ ...p, responsavel: e.target.value }))} />
+              <div className="field">
+                <label className="field-label">Responsável</label>
+                <input className="input" type="text" placeholder="Nome do responsável" value={setorForm.responsavel} onChange={(e) => setSetorForm(p => ({ ...p, responsavel: e.target.value }))} />
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-foot">
               <button className="btn btn-secondary" onClick={() => setShowSetorModal(false)}>Cancelar</button>
               <button className="btn btn-primary" onClick={handleSalvarSetor}>Salvar</button>
             </div>
@@ -375,39 +376,39 @@ export default function Configuracoes() {
 
       {/* Modal Alçada */}
       {showAlcadaModal && (
-        <div className="modal-overlay" onClick={() => setShowAlcadaModal(false)}>
+        <div className="overlay" onClick={() => setShowAlcadaModal(false)}>
           <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 500 }}>
-            <div className="modal-header">
+            <div className="modal-head">
               <h3>{editAlcada ? 'Editar Alçada' : 'Nova Alçada'}</h3>
               <button className="btn btn-ghost btn-icon" onClick={() => setShowAlcadaModal(false)}><XCircle size={20} /></button>
             </div>
             <div className="modal-body">
-              <div className="form-group">
-                <label className="form-label">Nível *</label>
-                <input className="form-input" type="text" placeholder="Ex: Nível 5" value={alcadaForm.nivel} onChange={(e) => setAlcadaForm(p => ({ ...p, nivel: e.target.value }))} />
+              <div className="field">
+                <label className="field-label">Nível *</label>
+                <input className="input" type="text" placeholder="Ex: Nível 5" value={alcadaForm.nivel} onChange={(e) => setAlcadaForm(p => ({ ...p, nivel: e.target.value }))} />
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Faixa Mínima</label>
-                  <input className="form-input" type="text" placeholder="R$ 0" value={alcadaForm.faixaMin} onChange={(e) => setAlcadaForm(p => ({ ...p, faixaMin: e.target.value }))} />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Faixa Mínima</label>
+                  <input className="input" type="text" placeholder="R$ 0" value={alcadaForm.faixaMin} onChange={(e) => setAlcadaForm(p => ({ ...p, faixaMin: e.target.value }))} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Faixa Máxima</label>
-                  <input className="form-input" type="text" placeholder="R$ 0" value={alcadaForm.faixaMax} onChange={(e) => setAlcadaForm(p => ({ ...p, faixaMax: e.target.value }))} />
+                <div className="field">
+                  <label className="field-label">Faixa Máxima</label>
+                  <input className="input" type="text" placeholder="R$ 0" value={alcadaForm.faixaMax} onChange={(e) => setAlcadaForm(p => ({ ...p, faixaMax: e.target.value }))} />
                 </div>
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Aprovador</label>
-                  <input className="form-input" type="text" placeholder="Cargo/Nome" value={alcadaForm.aprovador} onChange={(e) => setAlcadaForm(p => ({ ...p, aprovador: e.target.value }))} />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Aprovador</label>
+                  <input className="input" type="text" placeholder="Cargo/Nome" value={alcadaForm.aprovador} onChange={(e) => setAlcadaForm(p => ({ ...p, aprovador: e.target.value }))} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">SLA</label>
-                  <input className="form-input" type="text" placeholder="Ex: 24h" value={alcadaForm.tempoSLA} onChange={(e) => setAlcadaForm(p => ({ ...p, tempoSLA: e.target.value }))} />
+                <div className="field">
+                  <label className="field-label">SLA</label>
+                  <input className="input" type="text" placeholder="Ex: 24h" value={alcadaForm.tempoSLA} onChange={(e) => setAlcadaForm(p => ({ ...p, tempoSLA: e.target.value }))} />
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-foot">
               <button className="btn btn-secondary" onClick={() => setShowAlcadaModal(false)}>Cancelar</button>
               <button className="btn btn-primary" onClick={handleSalvarAlcada}>Salvar</button>
             </div>

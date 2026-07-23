@@ -271,10 +271,11 @@ export default function Fornecedores() {
 
   return (
     <>
-      <div className="page-header">
-        <div className="page-header-info">
-          <h2>Fornecedores</h2>
-          <p>Cadastro e gerenciamento de fornecedores para cotações e compras</p>
+      <div className="page-head">
+        <div>
+          <div className="page-eyebrow">Cadastros</div>
+          <h1 className="page-title">Fornecedores</h1>
+          <p className="page-desc">Cadastro e gerenciamento de fornecedores para cotações e compras</p>
         </div>
         <div className="page-actions">
           <button className="btn btn-secondary" onClick={handleExportar}>
@@ -286,8 +287,8 @@ export default function Fornecedores() {
         </div>
       </div>
 
-      <div className="filter-bar">
-        <div className="search-bar" style={{ maxWidth: 500 }}>
+      <div className="filter-row">
+        <div className="search" style={{ maxWidth: 500 }}>
           <Search className="search-icon" size={18} />
           <input
             type="text"
@@ -298,7 +299,7 @@ export default function Fornecedores() {
         </div>
       </div>
 
-      <div className="card">
+      <div className="panel">
         {loading ? (
           <div style={{ padding: 60, textAlign: 'center' }}>
             <Loader2 size={32} className="spin" color="#22c55e" />
@@ -306,7 +307,7 @@ export default function Fornecedores() {
           </div>
         ) : (
         <>
-        <div className="table-container">
+        <div className="table-wrap">
           <table>
             <thead>
               <tr>
@@ -349,7 +350,7 @@ export default function Fornecedores() {
                   <td>{f.categoria}</td>
                   <td><StarRating rating={f.rating} /></td>
                   <td style={{ fontWeight: 600 }}>{f.pedidos}</td>
-                  <td><span className={`status-badge ${f.status}`}>{f.status === 'active' ? 'Ativo' : 'Inativo'}</span></td>
+                  <td><span className={`pill pill-${f.status}`}>{f.status === 'active' ? 'Ativo' : 'Inativo'}</span></td>
                   <td>
                     <div style={{ display: 'flex', gap: 4 }}>
                       <button className="btn btn-ghost btn-icon btn-sm" title="Visualizar" onClick={() => setShowDetailModal(f.id)}><Eye size={16} /></button>
@@ -362,10 +363,10 @@ export default function Fornecedores() {
             </tbody>
           </table>
         </div>
-        <div className="pagination">
-          <div className="pagination-info">Mostrando {filteredData.length} de {fornecedores.length} fornecedores</div>
-          <div className="pagination-buttons">
-            <button className="pagination-btn active">1</button>
+        <div className="pager">
+          <div className="pager-info">Mostrando {filteredData.length} de {fornecedores.length} fornecedores</div>
+          <div className="pager-btns">
+            <button className="pager-btn active">1</button>
           </div>
         </div>
         </>
@@ -373,9 +374,9 @@ export default function Fornecedores() {
       </div>
 
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+        <div className="overlay" onClick={() => setShowModal(false)}>
           <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 700 }}>
-            <div className="modal-header">
+            <div className="modal-head">
               <h3>{editId ? 'Editar Fornecedor' : 'Novo Fornecedor'}</h3>
               <button className="btn btn-ghost btn-icon" onClick={() => setShowModal(false)}>
                 <XCircle size={20} />
@@ -383,11 +384,11 @@ export default function Fornecedores() {
             </div>
             <div className="modal-body">
               {/* CNPJ - campo principal com busca automática */}
-              <div className="form-group">
-                <label className="form-label">CNPJ</label>
+              <div className="field">
+                <label className="field-label">CNPJ</label>
                 <div style={{ position: 'relative' }}>
                   <input
-                    className="form-input"
+                    className="input"
                     type="text"
                     placeholder="00.000.000/0000-00"
                     value={form.cnpj}
@@ -437,44 +438,44 @@ export default function Fornecedores() {
                 </div>
               )}
 
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Razão Social</label>
-                  <input className="form-input" type="text" placeholder="Razão social completa" value={form.razaoSocial} onChange={(e) => updateForm('razaoSocial', e.target.value)} />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Razão Social</label>
+                  <input className="input" type="text" placeholder="Razão social completa" value={form.razaoSocial} onChange={(e) => updateForm('razaoSocial', e.target.value)} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Nome Fantasia</label>
-                  <input className="form-input" type="text" placeholder="Nome fantasia" value={form.nomeFantasia} onChange={(e) => updateForm('nomeFantasia', e.target.value)} />
+                <div className="field">
+                  <label className="field-label">Nome Fantasia</label>
+                  <input className="input" type="text" placeholder="Nome fantasia" value={form.nomeFantasia} onChange={(e) => updateForm('nomeFantasia', e.target.value)} />
                 </div>
               </div>
-              <div className="form-group">
-                <label className="form-label">Inscrição Estadual</label>
-                <input className="form-input" type="text" placeholder="Inscrição estadual" value={form.inscricaoEstadual} onChange={(e) => updateForm('inscricaoEstadual', e.target.value)} />
+              <div className="field">
+                <label className="field-label">Inscrição Estadual</label>
+                <input className="input" type="text" placeholder="Inscrição estadual" value={form.inscricaoEstadual} onChange={(e) => updateForm('inscricaoEstadual', e.target.value)} />
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Telefone</label>
-                  <input className="form-input" type="text" placeholder="(00) 0000-0000" value={form.telefone} onChange={(e) => updateForm('telefone', formatPhone(e.target.value))} />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Telefone</label>
+                  <input className="input" type="text" placeholder="(00) 0000-0000" value={form.telefone} onChange={(e) => updateForm('telefone', formatPhone(e.target.value))} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">E-mail</label>
-                  <input className="form-input" type="email" placeholder="email@fornecedor.com" value={form.email} onChange={(e) => updateForm('email', e.target.value)} />
+                <div className="field">
+                  <label className="field-label">E-mail</label>
+                  <input className="input" type="email" placeholder="email@fornecedor.com" value={form.email} onChange={(e) => updateForm('email', e.target.value)} />
                 </div>
               </div>
               {form.endereco && (
-                <div className="form-group">
-                  <label className="form-label">Endereço</label>
-                  <input className="form-input" type="text" value={form.endereco} onChange={(e) => updateForm('endereco', e.target.value)} />
+                <div className="field">
+                  <label className="field-label">Endereço</label>
+                  <input className="input" type="text" value={form.endereco} onChange={(e) => updateForm('endereco', e.target.value)} />
                 </div>
               )}
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Cidade</label>
-                  <input className="form-input" type="text" placeholder="Cidade" value={form.cidade} onChange={(e) => updateForm('cidade', e.target.value)} />
+              <div className="field-row">
+                <div className="field">
+                  <label className="field-label">Cidade</label>
+                  <input className="input" type="text" placeholder="Cidade" value={form.cidade} onChange={(e) => updateForm('cidade', e.target.value)} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Estado</label>
-                  <select className="form-select" value={form.estado} onChange={(e) => updateForm('estado', e.target.value)}>
+                <div className="field">
+                  <label className="field-label">Estado</label>
+                  <select className="input" value={form.estado} onChange={(e) => updateForm('estado', e.target.value)}>
                     <option value="">Selecione...</option>
                     <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
                     <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
@@ -486,9 +487,9 @@ export default function Fornecedores() {
                   </select>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="form-label">Categoria</label>
-                <select className="form-select" value={form.categoria} onChange={(e) => updateForm('categoria', e.target.value)}>
+              <div className="field">
+                <label className="field-label">Categoria</label>
+                <select className="input" value={form.categoria} onChange={(e) => updateForm('categoria', e.target.value)}>
                   <option value="">Selecione...</option>
                   <option>Tecnologia</option>
                   <option>Material Escritório</option>
@@ -499,12 +500,12 @@ export default function Fornecedores() {
                   <option>Serviços</option>
                 </select>
               </div>
-              <div className="form-group">
-                <label className="form-label">Observações</label>
-                <textarea className="form-textarea" placeholder="Dados adicionais sobre o fornecedor..." value={form.observacoes} onChange={(e) => updateForm('observacoes', e.target.value)} />
+              <div className="field">
+                <label className="field-label">Observações</label>
+                <textarea className="input" placeholder="Dados adicionais sobre o fornecedor..." value={form.observacoes} onChange={(e) => updateForm('observacoes', e.target.value)} />
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-foot">
               <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancelar</button>
               <button className="btn btn-primary" onClick={editId ? handleSalvarEdicao : handleCadastrar}>{editId ? 'Salvar Alterações' : 'Cadastrar Fornecedor'}</button>
             </div>
@@ -517,9 +518,9 @@ export default function Fornecedores() {
         const f = fornecedores.find(x => x.id === showDetailModal)
         if (!f) return null
         return (
-          <div className="modal-overlay" onClick={() => setShowDetailModal(null)}>
+          <div className="overlay" onClick={() => setShowDetailModal(null)}>
             <div className="modal slide-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 600 }}>
-              <div className="modal-header">
+              <div className="modal-head">
                 <h3>{f.nomeFantasia}</h3>
                 <button className="btn btn-ghost btn-icon" onClick={() => setShowDetailModal(null)}><XCircle size={20} /></button>
               </div>
@@ -532,12 +533,12 @@ export default function Fornecedores() {
                   <div className="detail-item"><label>E-mail</label><span>{f.email || '-'}</span></div>
                   <div className="detail-item"><label>Cidade</label><span>{f.cidade || '-'}</span></div>
                   <div className="detail-item"><label>Categoria</label><span>{f.categoria}</span></div>
-                  <div className="detail-item"><label>Status</label><span className={`status-badge ${f.status}`}>{f.status === 'active' ? 'Ativo' : 'Inativo'}</span></div>
+                  <div className="detail-item"><label>Status</label><span className={`pill pill-${f.status}`}>{f.status === 'active' ? 'Ativo' : 'Inativo'}</span></div>
                   <div className="detail-item"><label>Avaliação</label><span>{f.rating.toFixed(1)}</span></div>
                   <div className="detail-item"><label>Pedidos</label><span>{f.pedidos}</span></div>
                 </div>
               </div>
-              <div className="modal-footer">
+              <div className="modal-foot">
                 <button className="btn btn-secondary" onClick={() => setShowDetailModal(null)}>Fechar</button>
                 <button className="btn btn-primary" onClick={() => { setShowDetailModal(null); handleEditar(f.id) }}>Editar</button>
               </div>

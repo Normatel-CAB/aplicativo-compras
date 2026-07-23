@@ -84,10 +84,11 @@ export default function Projetos() {
 
   return (
     <>
-      <div className="page-header">
-        <div className="page-header-info">
-          <h2>Alocação por Projetos</h2>
-          <p>Controle de compras alocadas por projeto com acompanhamento de orçamento</p>
+      <div className="page-head">
+        <div>
+          <div className="page-eyebrow">Cadastros</div>
+          <h1 className="page-title">Projetos / Centros de Custo</h1>
+          <p className="page-desc">Controle de compras alocadas por projeto com acompanhamento de orçamento</p>
         </div>
         <div className="page-actions">
           <button className="btn btn-primary">
@@ -96,11 +97,11 @@ export default function Projetos() {
         </div>
       </div>
 
-      <div className="card" style={{ marginBottom: 24 }}>
-        <div className="card-header">
-          <span className="card-title">Gastos por Projeto</span>
+      <div className="panel" style={{ marginBottom: 24 }}>
+        <div className="panel-head">
+          <span className="panel-title">Gastos por Projeto</span>
         </div>
-        <div className="card-body" style={{ height: 250 }}>
+        <div className="panel-body" style={{ height: 250 }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={allocationData} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
@@ -113,8 +114,8 @@ export default function Projetos() {
         </div>
       </div>
 
-      <div className="filter-bar">
-        <div className="search-bar" style={{ maxWidth: 400 }}>
+      <div className="filter-row">
+        <div className="search" style={{ maxWidth: 400 }}>
           <Search className="search-icon" size={18} />
           <input
             type="text"
@@ -127,8 +128,8 @@ export default function Projetos() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))', gap: 20 }}>
         {filteredData.map((p) => (
-          <div key={p.id} className="card">
-            <div className="card-body">
+          <div key={p.id} className="panel">
+            <div className="panel-body">
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <div style={{
@@ -144,7 +145,7 @@ export default function Projetos() {
                     <div style={{ fontSize: 12, color: '#6b7280' }}>{p.id} • {p.responsavel}</div>
                   </div>
                 </div>
-                <span className={`status-badge ${p.status === 'active' ? 'active' : 'completed'}`}>
+                <span className={`pill pill-${p.status === 'active' ? 'active' : 'completed'}`}>
                   {p.status === 'active' ? 'Em Andamento' : 'Concluído'}
                 </span>
               </div>
@@ -155,9 +156,9 @@ export default function Projetos() {
                   {p.percentual}%
                 </span>
               </div>
-              <div className="progress-bar" style={{ marginBottom: 16 }}>
+              <div className="meter" style={{ marginBottom: 16 }}>
                 <div
-                  className="progress-fill"
+                  className="meter-fill"
                   style={{
                     width: `${p.percentual}%`,
                     background: p.percentual > 90
